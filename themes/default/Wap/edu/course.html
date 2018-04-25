@@ -1,0 +1,95 @@
+<include file='public:header'/> 
+<script>
+        $(function(){
+            $("#search-btn").click(function(){
+                if($(".top-search").css("display")=='block'){
+                    $(".top-search").hide();
+                    $(".top-title").show(200);
+                }
+                else{
+                    $(".top-search").show();
+                    $(".top-title").hide(200);
+                }
+            });
+        });
+    </script>
+
+
+<link rel="stylesheet" href="http://ceshi.weixinkc.com/static/default/wap/css/elescroll.css" />
+<script type="text/javascript" src="http://ceshi.weixinkc.com/static/default/wap/js/elescroll.js"></script>
+<header class="top-fixed bg-yellow bg-inverse">
+        <div class="top-back">
+            <a class="top-addr" href="<{:U('edu/index')}>"><i class="iconfont icon-angle-left"></i></a>
+        </div>
+        <div class="top-title">
+           课程列表
+        </div>
+        <div class="top-search" style="display:none;">
+            <form method="post" action="<{:U('edu/course')}>">
+                <input name="keyword" placeholder="输入商品的关键字">
+                <button type="submit" class="iconfont icon-search"></button> 
+            </form>
+        </div>
+        <div class="top-signed">
+            <a id="search-btn" href="javascript:void(0);"><i class="iconfont icon-search"></i></a>
+        </div>
+    </header>
+        
+        <!--- 以下检索为组合搜索  on为当前选中的状态-->
+<div class="screening">
+    <ul>
+        <li class="search_bar" data="sort"><span>分类</span><i></i></li>
+        <li class="search_bar" data="area"><span>年龄</span><i></i></li>
+        <li class="search_bar" data="busi"><span>时间</span><i></i></li>
+        <li class="search_bar" data="ord"><span>类型</span><i></i></li>
+    </ul>
+</div>
+
+<div class="meishi sort">
+    <ul class="meishia-w">
+    
+    <foreach name="cates" item="var">  
+       <if condition="$var.parent_id neq 0">            
+          <li <if condition="$cate_id eq $var['cate_id']">class="on"</if> >
+             <a href="<{:LinkTo('edu/course',$linkArr,array('cate_id'=>$var['cate_id']))}>"><{$var.cate_name}></a>
+          </li>
+       </if>  
+	</foreach>
+    </ul>
+       
+    </div>
+
+
+    <div class="meishi area">
+        <ul>
+            <volist name='age' id='item'> 
+                <li <if condition="$age_id eq $i">class="on"</if>><a href="<{:LinkTo('edu/course',$linkArr,array('age_id'=>$i))}>"><{$item}></a></li>
+            </volist>
+        </ul>
+   </div>
+    <div class="meishi busi">
+        <ul>
+           <volist name='get_time' id='item'> 
+                <li <if condition="$time_id eq $i">class="on"</if>><a href="<{:LinkTo('edu/course',$linkArr,array('time_id'=>$i))}>"><{$item}></a></li>
+            </volist>
+        </ul>
+   </div>
+     <div class="meishi ord">
+        <ul>
+           <volist name='class' id='item'> 
+                <li <if condition="$class_id eq $i">class="on"</if>><a href="<{:LinkTo('edu/course',$linkArr,array('class_id'=>$i))}>"><{$item}></a></li>
+            </volist>
+        </ul>
+   </div>
+
+<div class="index-shike" style="margin-top:30px">
+   <ul class="school_list">
+   </ul>
+</div>
+<script>
+	$(document).ready(function () {
+		loaddata('<{$nextpage}>', $(".index-shike ul"), true);
+	});
+</script>
+
+<include file="public:footer"/>

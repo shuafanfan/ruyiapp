@@ -1,0 +1,38 @@
+<include file="public:header"/>   
+<style>
+.mui-content{ height:auto;}
+.mui-table-view-cell:after {left: 0px; height: 10px;-webkit-transform: none;transform: inherit;background-color: #ECEEF1;}
+</style> 
+    
+<header id="header" class="mui-bar mui-bar-nav">
+   <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" href="<{:U('index/index')}>"></a>
+   <h1 class="mui-title">
+       <eq name='status' value='1'>待抢单</eq>
+       <eq name='status' value='2'>已抢单</eq>
+       <eq name='status' value='8'>已完成</eq>
+   </h1>
+   <a class="mui-icon mui-icon-upload mui-pull-right" href="<{:U('passport/logout')}>"></a>
+</header>
+<div class="mui-content">
+
+
+<div style="padding: 10px 10px;">
+	<div id="segmentedControl" class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-primary">
+		<a class="mui-control-item <eq name='status' value='1'> mui-active</eq>" href="<{:U('order/index',array('status'=>1))}>">待抢单</a>
+		<a class="mui-control-item <eq name='status' value='2'> mui-active</eq>" href="<{:U('order/index',array('status'=>2))}>">已抢单</a>
+		<a class="mui-control-item <eq name='status' value='8'> mui-active</eq>" href="<{:U('order/index',array('status'=>8))}>">已完成</a>
+	</div>
+</div>
+
+							
+      <ul class="mui-table-view"></ul>
+  </div>                      
+   
+<script type="text/javascript">
+	$(document).ready(function () {
+		loaddata('<{:U("order/loaddata/",array("status"=>$status,"p"=>"0000"))}>', $(".mui-table-view"), true);
+	});        
+    mui('body').on('tap','a',function(){document.location.href=this.href;});  
+	mui('body').on('click','a',function(){document.location.href=this.href;});
+</script>      
+<include file="public:footer"/>

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="UTF-8">
+		<title><{$CONFIG.site.title}>管理员后台</title>
+		
+		
+		<link href="__TMPL__statics/login/css/login.css" rel="stylesheet" type="text/css" />
+<script> var BAO_PUBLIC = '__PUBLIC__';
+
+            var BAO_ROOT = '__ROOT__';</script>
+
+        <script src="__PUBLIC__/js/jquery.js"></script>
+       <script src="__TMPL__statics/login/js1/login-xin.js"></script>
+        <script src="__PUBLIC__/js/my97/WdatePicker.js"></script>
+
+        <script src="__PUBLIC__/js/admin2.js"></script>
+       
+<style>
+
+.baomsgbox{min-width:150px;max-width:250px;background:#fff;height:40px;line-height:40px;border:2px #09c double;position:fixed;padding:0 10px;z-index:100000;top:20%;left:45%;-webkit-box-shadow:3px 3px #a9a9a9;-moz-box-shadow:3px 3px #a9a9a9;box-shadow:3px 3px #a9a9a9;-moz-border-radius:3px;-webkit-border-radius:3px;border-radius:3px;display:none}
+.baomsgbox img{float:left;margin-top:12px;width:16px;height:16px;display:block}
+.baomsgbox span{float:left;display:block;margin-left:20px;font-size:14px;font-family:"微软雅黑";font-weight:700}
+.surePwd1_pass{
+        
+        margin-left:-0.1%;
+		margin-top:-2.1%;
+    }
+</style>
+
+	</head>
+	<body >   
+	<iframe id="baocms_frm" name="baocms_frm" style="display:none;"></iframe>
+<div class="login">
+			<div class="login-head">
+				<div class="login-head-a">
+					<img height="80px" src="<{:config_img($CONFIG['site']['logo'])}>" title="" alt=""/>
+						
+				</div>
+				<div class="login-head-b">
+					系统后台管理
+				</div>
+			</div>
+			<div class="login-con">
+			
+				<div class="login-a">
+					
+                      <div class="login-b">
+					   <form method="post" action="<{:U('login/loging')}>" target="baocms_frm" >
+                      	<div class="login-b-a">管理员登陆</div>
+                      	<div class="login-b-b">
+                      		<ul>
+                      			<li>
+                      				<label  >用户名：</label><input type="text" name="username"/>
+                      				<span id="user_pass"></span>
+                      			</li>
+                      			<li>
+                      				<label>密 &nbsp;&nbsp;码：</label><input type="password"  name="password"/>
+                      				<span id="pwd_pass"></span>
+                      			</li>
+								<li>
+								<label >验证码：</label><input type="text" style="width:60px" name="yzm" />      
+                                      <span  id="surePwd_pass"></span> <span class="surePwd1_pass"><img src="__ROOT__/index.php?g=app&m=verify&a=index&mt=<{:time()}>" onclick="this.src=this.src+'?'" / /></span>      
+                                    <h1 id="c-tip"></h1></li>
+                      			
+                      			
+                      			<li class="login-x">
+		                     <div class="login-x-a"><input type="submit" name="登录"value="登录"id="Button1" onClick="validate();" /><div class="x"></div></div>
+							  
+		                         
+	                            </li>
+                      			
+                      		</ul>
+                      	</div>
+                      	</form>
+                      </div>
+					
+				</div>
+			</div>
+			<div class="login-foot">
+				技术支持：<{$CONFIG.site.title}>，商家入驻请联系，<{$CONFIG.site.tel}>,诚招乡镇加盟，有管理后台。 
+			</div>
+		</div>
+</body> 
+<include  file='public:footer'/>    
+
+
+
+
+
+            

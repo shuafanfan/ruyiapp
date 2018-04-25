@@ -1,0 +1,30 @@
+<include  file='public:header'/>
+<div class="mainBt">
+    <ul>
+        <li class="li1">设置</li>
+        <li class="li2">基本设置</li>
+        <li class="li2 li3">商城配置</li>
+    </ul>
+</div>
+<div class="main-cate">
+    <p class="attention"><span>注意：</span>这里配置是商城相关的信息</p>
+</div>       
+<div class="mainScAdd">
+    <div class="tableBox">
+        <form  target="baocms_frm" action="<{:U('setting/goods')}>" method="post">
+            <table  bordercolor="#dbdbdb" cellspacing="0" width="100%" border="1px"  style=" border-collapse: collapse; margin:0px; vertical-align:middle; background-color:#FFF;" >
+                <tr>
+                    <td class="lfTdBt" >抢单默认配送费：</td>
+                    <td class="rgTdBt">
+                        <input type="text" name="data[default_delivery_express_price]" value="<{$CONFIG.goods.default_delivery_express_price}>" class="scAddTextName " />
+                        <code>如果该商家没有开启第三方配送，这里设置无效，开启后比如该笔订单的配送费小于这里设置的金额，那么给配送员的实际结算金额在这里设置生效，
+                        如果该订单的配送费大于这里的设置，就按照实际运费结算给配送员，比如这里设置5元，订单配送费是6元，就按照6元配送费结算给商家，如果订单配送费
+                        是4元，不足5元，就按照5元结算给商家</code>
+                    </td>
+                </tr>
+            </table>
+            <div class="smtQr"><input type="submit" value="确认设置" class="smtQrIpt" /></div>
+        </form>
+    </div>
+</div>
+<include  file='public:footer'/>       

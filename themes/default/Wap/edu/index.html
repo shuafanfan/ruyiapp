@@ -1,0 +1,179 @@
+<include file='public:header'/> 
+       <script>
+        $(function(){
+            $("#search-btn").click(function(){
+                if($(".top-search").css("display")=='block'){
+                    $(".top-search").hide();
+                    $(".top-title").show(200);
+                }
+                else{
+                    $(".top-search").show();
+                    $(".top-title").hide(200);
+                }
+            });
+        });
+    </script>
+
+
+    <header class="top-fixed bg-yellow bg-inverse">
+        <div class="top-back">
+            <a class="top-addr" href="<{:U('index/index')}>"><i class="iconfont icon-angle-left"></i></a>
+        </div>
+        <div class="top-title">
+            试课
+        </div>
+        <div class="top-search" style="display:none;">
+            <form method="post" action="<{:U('edu/course')}>">
+                <input name="keyword" placeholder="输入课程的关键字">
+                <button type="submit" class="iconfont icon-search"></button> 
+            </form>
+        </div>
+        <div class="top-signed">
+            <a id="search-btn" href="javascript:void(0);"><i class="iconfont icon-search"></i></a>
+        </div>
+    </header>
+        <script src="http://ceshi.weixinkc.com/themes/default/Mobile/statics/js/jquery.touchSlider.js"></script>
+     <script type="text/javascript">
+                    $(document).ready(function () {
+                        $(".main_image").touchSlider({
+                            flexible: true,
+                            speed: 200,
+                            btn_prev: $("#btn_prev"),
+                            btn_next: $("#btn_next"),
+                            paging: $(".flicking_con a"),
+                            counter: function (e) {
+                                $(".flicking_con a").removeClass("on").eq(e.current - 1).addClass("on");
+                            }
+                        });
+                        $(".main_image").bind("mousedown", function () {
+                            $dragBln = false;
+                        });
+                        $(".main_image").bind("dragstart", function () {
+                            $dragBln = true;
+                        });
+                        $(".main_image a").click(function () {
+                            if ($dragBln) {
+                                return false;
+                            }
+                        });
+                        timer = setInterval(function () {
+                            $("#btn_next").click();
+                        }, 5000);
+
+                        $(".ele_banner").hover(function () {
+                            clearInterval(timer);
+                        }, function () {
+                            timer = setInterval(function () {
+                                $("#btn_next").click();
+                            }, 5000);
+                        });
+                        $(".main_image").bind("touchstart", function () {
+                            clearInterval(timer);
+                        }).bind("touchend", function () {
+                            timer = setInterval(function () {
+                                $("#btn_next").click();
+                            }, 5000);
+                        });
+                    });
+                </script>
+                <div class="ele_banner" style="display: none;">
+                    <div class="flicking_con">
+                                        </div>
+                    <div class="main_image">
+                        <ul>
+                                                    </ul>
+                    </div>
+                    <a href="javascript:;" id="btn_prev"></a>
+                    <a href="javascript:;" id="btn_next"></a>
+                </div>
+
+
+
+      <div class="ele_banner">
+          <div class="flicking_con">
+                  <a href="#" class=""></a>
+                  <a href="#" class="on"></a>
+                  <a href="#" class=""></a>
+                  <a href="#" class=""></a>
+                                        </div>
+                    <div class="main_image">
+                        <ul style="width: 1440px; overflow: visible;">
+                        <calldata mdl="Ad" where=" closed=0 AND site_id=57 AND city_id IN ({$city_ids}) and bg_date ELT '{$today}' AND end_date EGT '{$today}' " limit="0,3" cache="7200" order="orderby asc">
+						<li><a href="<{:U('app/ad/click',array('ad_id'=>$item['ad_id'],'aready'=>2))}>" class="favou-ig-1"><img src="<{:config_img($item['photo'])}>" alt="1"></a></li>
+					</calldata>
+                                                    </ul>
+                    </div>
+                    <a href="javascript:;" id="btn_prev"></a>
+                    <a href="javascript:;" id="btn_next"></a>
+                </div>
+<div class="blank-10  bg" style="border-bottom: thin solid #eee;"></div>
+
+ <!--分类开始-->
+<div class="shike-nav">
+<ul>
+<php>$k = 0;</php> 
+<foreach name="cates" item="var">  
+        <php>$k++;</php>
+        <if condition="$i lt 9">
+            <if condition="$var.parent_id eq 0">            
+                <li>
+                	<a href="<{:LinkTo('edu/course',array('cate_id'=>$var['cate_id']))}>"><img src="<{:config_img($var['photo'])}>"><br><{$var.cate_name}></a>
+                </li>
+            </if>  
+        </if> 
+</foreach>
+</ul>
+</div>
+     <!--首页分类结束-->
+    <div class="blank-10  bg" style="border-bottom: thin solid #eee;"></div>
+    <div class="shike-h3 icon">热门推荐</div>
+    <div class="index-shike">
+        
+        <ul class="school_list">
+        
+        <volist name="list" id="var">
+        <li> 
+            <div class="course"> 
+                <div class="course-left">
+                    <a class="course-link" href="<{:U('edu/course_detail',array('course_id'=>$var['course_id']))}>">
+                   		<img src="<{:config_img($var['photo'])}>">
+                    </a>
+                    <i class="verify"></i>
+                    <div class="course-po">   
+                        <if condition="$var['type'] eq 1">     
+                            <a href="">试课:<{:round($var['test_price']/100,2)}></a> 
+                        <else/>
+                            <a href="">售价:<{:round($var['course_price']/100,2)}></a> 
+                        </if>           
+                        <a href="">报名:<{$var['sale']}></a>
+                    </div>
+                </div> 
+                <div class="course-right"> 
+                <php>
+                $edu = D('Edu')->where(array('edu_id'=>$var['edu_id']))->find();
+                $score = D('EduComment')->where(array('course_id'=>$var['course_id']))->avg('score');
+                </php>
+                    <a href="" class="course-title"><{$var['title']}>
+                    <if condition="!empty($var['is_refund'])"> 
+                    	<em>随时退</em>
+                    </if>
+                    </a> 
+                    <p class="course-addr"><{$edu['edu_name']}></p>
+                    <p class="shike-star">
+                      <if condition="!empty($score)"> 
+                        <span class="ui-starbar"><span style="width:<{$score*20}>%"></span></span><em><{:round($score/1,2)}>分</em>
+                      <else/>
+                       <p class="course-addr">暂无评价</p>
+                      </if> 
+                    </p>
+                </div>
+            </div>
+        </li>
+       </volist> 
+     
+
+
+</ul>
+
+    </div>
+<include file="public:footer"/>

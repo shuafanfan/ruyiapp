@@ -1,0 +1,187 @@
+<include file="public:header"/>
+<style>
+.icon-xiaoxi3, .top-fixed .top-back i { font-size: 18px;}
+.top-fixed {border-bottom: none;}
+.top-fixed .top-search input {border-radius:2px;}
+.top-fixed .top-share, .top-fixed .top-back {padding-right: 0px;}
+.top-fixed .top-title {font-size: 14px;}
+.top-fixed .top-share a {width: 50px !important;}
+p, .p {margin-bottom: 0px;}
+.member-top { margin-top: 0px;}
+</style>
+
+	<header class="top-fixed bg-yellow bg-inverse transparent" id="header">
+		<div class="top-back">
+			<a class="top-addr" href="<{:u('wap/index/index')}>"><i class="iconfont icon-angle-left"></i></a>
+		</div>
+		<div class="top-title">
+			会员中心
+		</div>
+    <!--    <div class="top-search" style="display:none;">
+			<form method="post" action="<{:U('wap/all/index')}>">
+				<input name="keyword" placeholder="输入关键字"  />
+				<button type="submit" class="iconfont icon-search"></button> 
+			</form>
+		</div>-->
+      	<div class="top-share">
+		<a href="<{:u('user/message/index')}>"><span class="iconfont icon-xiaoxi3"></span></a>
+		</div>
+<!--		<div class="top-share">
+			<include file="public:message"/>
+		</div>-->
+	</header>
+
+
+<div class="member-top">
+<div class="member-info">
+<div class="user-avatar"> 
+<img src="<{:config_img($MEMBER['face'])}>"> 
+</div>
+<div class="user-name"> 
+    <span>
+        <if condition="!empty($MEMBER['nickname'])">
+          <{$MEMBER.nickname}> 
+        <else/>
+          <{$MEMBER.account}> 
+        </if>
+        <if condition="!empty($ranks[$MEMBER['rank_id']]['rank_name'])">
+        <sup><{$ranks[$MEMBER['rank_id']]['rank_name']}></sup>
+        </if>
+        <sup class="aux" onclick="location='<{:u('usersaux/index')}>'">实名管理</sup>
+    </span> 
+</div>
+</div>
+<div class="member-collect">
+<span><a href="<{:U('money/index')}>"><em><{:round($MEMBER['money']/100,2)}></em><p>我的余额</p></a> </span>
+<span><a href="<{:U('integral/restore')}>"><em><{$MEMBER.integral}></em><p>我的积分</p></a> </span>
+<if condition="!empty($open_running)">  
+<!-- <span><a href="<{:U('running/index')}>"><i class="goods-browse"></i><p>持续更新中....</p></a></span> -->
+<span><a href="<{:U('#')}>"><i class="goods-browse"></i><p>持续更新中....</p></a></span>
+</if>
+</div>
+</div>
+<script type="text/javascript">
+	$(function(){
+		$("#search-btn").click(function(){
+			if($(".top-search").css("display")=='block'){
+				$(".top-search").hide();
+				$(".top-title").show(200);
+			}
+			else{
+				$(".top-search").show();
+				$(".top-title").hide(200);
+			}
+		});
+	});
+</script>  
+    
+
+<!-- <div class="member-center">
+      <dl class="mt5">
+        <dd>
+          <ul id="order_ul">
+              <li><a href="<{:U('tuan/index')}>"><i class="iconfont icon-qianggou3"></i><p>抢购</p></a></li>
+              <if condition="$open_mall eq 1">
+              <li><a href="<{:LinkTo('goods/index',array('aready'=>1))}>"><i class="iconfont icon-xianjinfencheng"></i><p>订单</p></a></li>
+              </if>
+              <li><a href="<{:U('eleorder/index')}>"><i class="iconfont icon-waimai1"></i><p>外卖</p></a></li>
+              <if condition="$open_booking eq 1">
+              <li><a href="<{:LinkTo('booking/index')}>"><i class="iconfont icon-book"></i><p>订座</p></a></li>
+              </if>
+              <li><a href="<{:U('breaks/index')}>"><i class="iconfont icon-maidan"></i><p>买单</p></a></li>
+          </ul>
+        </dd>
+      </dl>
+      
+</div> -->
+    
+    
+<div class="blank-10 bg"></div>
+<div class="panel-list">
+	<ul>
+
+<li><a href="<{:U('information/index')}>"><span class="iconfont icon-guanli"></span>账户管理<i class="iconfont icon-fangxiangyou"></i></a></li>
+
+<php>
+$worker = D('Shopworker')->where(array('user_id'=>$MEMBER['user_id']))->find();
+$user_delivery = D('Delivery')->where(array('user_id'=>$MEMBER['user_id'],'audit'=>1,'closed'=>0))->find();
+$config = D('Setting')->fetchAll();
+</php>
+
+
+<if condition="$is_shop neq null">
+<li><a href="<{:U('distributors/index/index')}>"><span class="iconfont icon-shangjia2"></span>管理我的商家<font>（<{$is_shop_name}>）</font><i class="iconfont icon-fangxiangyou"></i></a></li>
+</if>
+
+<if condition="!empty($config['backers']['open'])">
+    <li>
+    	<a href="<{:U('backers/apply')}>"><span class="iconfont icon-tuishouguanli"></span>我的推手<font></font><i class="iconfont icon-fangxiangyou"></i></a>
+    </li>
+</if>
+
+
+
+<if condition="!empty($worker)">
+	<li>
+        <a href="<{:U('worker/index/index')}>"><span class="iconfont icon-shangjia"></span>店员中心登录<font>（<{$worker['name']}>）</font>
+        <i class="iconfont icon-fangxiangyou"></i></a>
+    </li>
+</if>
+
+<if condition="!empty($user_delivery)">
+	<li>
+        <a href="<{:U('delivery/index/index')}>"><span class="iconfont icon-trlogonline"></span>配送员中心登录<font>（<{$user_delivery['name']}>）</font>
+        <i class="iconfont icon-fangxiangyou"></i></a>
+    </li>
+</if>
+
+<li><a href="<{:U('money/index')}>"><span class="iconfont icon-chongzhi3"></span>余额充值<i class="iconfont icon-fangxiangyou"></i></a></li>
+
+	</ul>
+
+</div>
+
+<div class="blank-10 bg"></div>
+
+<div class="panel-list">
+	<ul>
+          
+    <li>
+        <a href="<{:U('life/index')}>"><span class="iconfont icon-fenleixinxi"></span>我的同城信息&nbsp; 
+        <i class="iconfont icon-fangxiangyou"></i>
+        </a>
+    </li>  
+  
+
+
+
+
+        <li>
+			<a href="<{:U('yuyue/index',array('status'=>2))}>">
+				<span class="iconfont icon-yuyue1"></span>
+				我的预约
+				<i class="iconfont icon-fangxiangyou"></i>
+			</a>
+		</li>
+
+
+	<li><a href="<{:U('appoint/index')}>"><span class="iconfont icon-jiazhengfuwu"></span>我的家政<i class="iconfont icon-fangxiangyou"></i></a></li>
+
+ <div class="blank-10 bg"></div>
+ 
+       <li><a href="<{:U('distribution/index')}>"><span class="iconfont icon-xianjinfencheng"></span>我的分成<i class="iconfont icon-fangxiangyou"></i></a></li>
+    
+<if condition="$open_running eq 1">        
+<li><a href="<{:U('running/index')}>"><span class="iconfont icon-trlogonline"></span>我的跑腿&nbsp; <i class="iconfont icon-fangxiangyou"></i></a></li>  
+</if>         
+
+
+	</ul>
+
+</div>
+<div class="blank-10"></div>
+<div class="container text-center">
+		<a class="button button-block button-big bg-dot" href="<{:u('wap/passport/logout')}>">退出后台</a>
+</div>
+
+<include  file='public:footer'/>

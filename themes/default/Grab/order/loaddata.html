@@ -1,0 +1,49 @@
+<foreach name="list" item="item">
+  <li class="mui-table-view-cell mui-media">
+    <img class="mui-media-object mui-pull-left" src="<{:config_img($item['cate']['photo'])}>">
+    <div class="mui-media-body">
+        <{$item.cate.cate_name}> -- <{$item.attr.attr_name}>
+        <p class="mui-ellipsis"><{$item.name}>/<{$item.mobile}></p>
+        <p class="mui-ellipsis">预约地址：<{$item.addr}></p>
+        <p class="mui-ellipsis">预订时间：<{$item.gotime|date='Y-m-d',###}></p>
+        <p class="mui-ellipsis">支付定金：&yen;<{:round($item['price']/100,2)}>元</p>
+                                
+     	<p class="mui-col-sm-12 text-right">
+          <a href="<{:U('order/detail',array('order_id'=>$item['order_id']))}>" class="mui-btn mui-btn-primary"> 详情</a>
+          <eq name="item.status" value="1"><a href="javascript:void(0);" val="<{$item.order_id}>" class="orders_btn mui-btn mui-btn-danger"> 接单</a></eq>
+          <eq name="item.status" value="2"><a href="javascript:void(0);" val="<{$item.order_id}>" class="complete_btn mui-btn mui-btn-danger"> 完成</a></eq>
+        </p>
+        <div class="blank-10"></div>                       
+     </div>
+   </li>
+</foreach>
+<script type="text/javascript">
+	$(document).ready(function () {
+		$('.orders_btn').click(function(){
+			var order_id = $(this).attr('val');
+			$.post('<{:U("order/orders")}>',{order_id:order_id},function(result){
+				if(result.status == 'success'){
+					layer.msg(result.message,{icon:6});
+					setTimeout(function(){
+						location.reload(true);
+					},3000);
+				}else{
+					layer.msg(result.message);
+				}
+			},'json');
+		})
+		$('.complete_btn').click(function(){
+			var order_id = $(this).attr('val');
+			$.post('<{:U("order/complete")}>',{order_id:order_id},function(result){
+				if(result.status == 'success'){
+					layer.msg(result.message,{icon:6});
+					setTimeout(function(){
+						location.reload(true);
+					},3000);
+				}else{
+					layer.msg(result.message);
+				}
+			},'json');
+		})
+	});        
+</script>  

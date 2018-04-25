@@ -1,0 +1,168 @@
+<php>$seo_title = $detail['title'];</php>
+<include file='public:header'/>    
+	<header class="top-fixed bg-yellow bg-inverse">
+		<div class="top-back">
+			<a class="top-addr" href="<{:U('index/index')}>"><i class="iconfont icon-angle-left"></i></a>
+		</div>
+		<div class="top-title">
+			热门资讯
+		</div>
+        <div class="top-search" style="display:none;">
+			<form method="post" action="<{:U('news/index')}>">
+				<input name="keyword" placeholder="输入新闻的关键字"  />
+				<button type="submit" class="iconfont icon-search"></button> 
+			</form>
+		</div>
+		<div class="top-signed">
+			<a id="search-btn" href="javascript:void(0);"><i class="iconfont icon-search"></i></a>
+		</div>
+	</header>
+<style>
+.www_hatudou_com_ad { padding: 10px 10px !important;width: 100%;}
+.www_hatudou_com_ad a {display: block;overflow: hidden;width: 100%;margin: 0;padding: 0;height: auto;line-height: 0.8;}
+.www_hatudou_com_ad img {width: 100%;overflow: hidden;}
+.list-media-x li .pic{overflow:hidden;width:100%;padding:0 10px;margin-bottom:10px}
+.list-media-x li .pic span{float:left;width:33.33333% border: none;list-style:none}
+.list-media-x li .pic span img{max-width:90px;height:67px;overflow:hidden;float:left;display:inline;margin-right:10px;position:relative;z-index:1;width:auto}
+.select_wrapper .select_01 .active a {color: #ff9933;border-bottom: 2px solid #ff9933; padding: 5px 0;}
+</style>   
+    <script>
+	$(function(){
+		$("#search-btn").click(function(){
+			if($(".top-search").css("display")=='block'){
+				$(".top-search").hide();
+				$(".top-title").show(200);
+			}
+			else{
+				$(".top-search").show();
+				$(".top-title").hide(200);
+			}
+		});
+		});
+    </script>
+    
+    
+    <div id="filter2" class="filter2">
+    <ul class="tab clearfix">
+      <li class="item">
+        <a href="javascript:void(0);">
+            <if condition="!empty($cat)">
+            	<span id="str_b_node" style="color:#f60"> <{$articlecates[$cat]['cate_name']}></span>
+            <else/>
+            	<span id="str_b_node">选择分类</span>
+            </if>
+            <em></em>
+        </a>
+      </li>
+      
+      <li class="item">
+        <a href="javascript:void(0);">
+            <if condition="empty($type)">
+            	<span id="str_e_node">选择类型</span>
+            <elseif condition="$type eq 1"/>
+            	<span id="str_b_node" style="color:#f60;">置顶文章</span>
+            <elseif condition="$type eq 2"/>
+            	<span id="str_b_node" style="color:#f60;">精华文章</span>
+            </if>
+            <em></em>
+        </a>
+      </li>
+     
+     <li class="item">
+        <a href="javascript:void(0);">
+            <if condition="empty($order)">
+            	<span id="str_e_node">选择排序</span>
+            <elseif condition="$order eq 1"/>
+            	<span id="str_b_node" style="color:#f60;">浏览次数</span>
+            <elseif condition="$order eq 2"/>
+            	<span id="str_b_node" style="color:#f60;">点赞人数</span>
+            <elseif condition="$order eq 3"/>
+            	<span id="str_b_node" style="color:#f60;">打赏人数</span>
+            <elseif condition="$order eq 4"/>
+            	<span id="str_b_node" style="color:#f60;">发布时间</span>
+            </if>
+            <em></em>
+        </a>
+      </li>
+    </ul>
+    
+    <div class="inner" style=" display:none">
+      <ul>
+        <li class="item">
+        <a class="rights" href="<{:LinkTo('news/index',$linkArr,array('cat'=>0))}>">全部分类</a>
+        </li>
+       <foreach name="articlecates" item="var">
+          <if condition="$var.parent_id eq 0">           
+            <li id="cat_<{$var['cate_id']}>"><a class="rights hasUlLink" title="<{$var.cate_name}>" href="javascript:void(0);>"><{$var.cate_name}><span class="num"></span></a>
+               <ul id="items0">  
+                <foreach name="articlecates" item="product">
+                   <if condition="$product.parent_id eq $var['cate_id']"> 
+                       <li><a title="<{$product.cate_name}>" href="<{:LinkTo('news/index',$linkArr,array('cat'=>$product['cate_id']))}>"> <{$product.cate_name}><span class="num"></span></a>
+                            
+                   </if>
+                </foreach>
+               </ul>
+             </li>
+          </if>     
+        </foreach>
+      </ul><!--1级end-->
+    </div>
+    
+    <div class="inner" style="display:none;">
+       <ul>
+       	 <li <if condition="$type eq 0"> style="color:red;"</if>><a href="<{:LinkTo('news/index',$linkArr,array('type'=>0))}>">默认类型</a></li>
+       	 <li <if condition="$type eq 1"> style="color:red;"</if>><a href="<{:LinkTo('news/index',$linkArr,array('type'=>1))}>">置顶文章</a></li>
+         <li <if condition="$type eq 2"> style="color:red;"</if>><a href="<{:LinkTo('news/index',$linkArr,array('type'=>2))}>">精华文章</a></li>
+        </ul>
+     </div>
+    
+    
+    <div class="inner" style="display:none;">
+       <ul>
+       	 <li <if condition="$order eq 0"> style="color:red;"</if>><a href="<{:LinkTo('news/index',$linkArr,array('order'=>0))}>">默认排序</a></li>
+         <li <if condition="$order eq 1"> style="color:red;"</if>><a href="<{:LinkTo('news/index',$linkArr,array('order'=>1))}>">浏览次数</a></li>
+         <li <if condition="$order eq 2"> style="color:red;"</if>><a href="<{:LinkTo('news/index',$linkArr,array('order'=>2))}>">点赞人数</a></li>
+         <li <if condition="$order eq 3"> style="color:red;"</if>><a href="<{:LinkTo('news/index',$linkArr,array('order'=>3))}>">打赏人数</a></li>
+		 <li <if condition="$order eq 4"> style="color:red;"</if>><a href="<{:LinkTo('news/index',$linkArr,array('order'=>4))}>">发布时间</a></li>
+        </ul>
+     </div>
+      
+     <div id="parent_container" class="inner_parent" style="display:none;"><div class="innercontent"></div></div>
+     <div id="inner_container" class="inner_child" style="display:none;"><div class="innercontent"></div></div>
+</div>
+<!--end-->    
+
+<div id="fullbg" class="fullbg" style="display: none; height: 250px;"><i class="pull2"></i></div>
+    <script>
+		$("#search-bar li").each(function(e){
+			$(this).click(function(){
+				if($(this).hasClass("on")){
+					$(this).parent().find("li").removeClass("on");
+					$(this).removeClass("on");
+					$(".serch-bar-mask").hide();
+				}
+				else{
+					$(this).parent().find("li").removeClass("on");
+					$(this).addClass("on");
+					$(".serch-bar-mask").show();
+				}
+				
+			});
+		});
+	</script>  
+	<div class="blank-10 bg"></div>
+	<div class="sec-title">	
+		<div class="divider"></div>	
+		<span>资讯列表</span>
+	</div>
+	<div class="list-media-x" id="list-media">
+	<ul></ul>
+    </div>
+    <script>
+		$(document).ready(function () {
+			showFilter({ibox:'filter2',content1:'parent_container',content2:'inner_container',fullbg:'fullbg'});
+			loaddata('<{$nextpage}>', $("#list-media ul"), true);
+		});
+	</script>
+	</div>
+<include file="public:footer"/>

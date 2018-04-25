@@ -1,0 +1,69 @@
+
+<style>
+.footer-search{padding:15px;background:#fff;border-bottom:thin solid #eee;padding-bottom:5px}
+</style>
+   
+<div class="footer">
+    
+    当前城市：<a class="button button-small text-yellow" href="<{:U('city/index',array('type'=>$ctl))}>"  title="<{:bao_msubstr($city_name,0,4,false)}>"><{:bao_msubstr($city_name,0,4,false)}></a>   
+    <if condition="!empty($is_shop)">
+    	<a href="<{:u('distributors/index/index')}>" title="管理商家">管理商家</a>   &nbsp; &nbsp; 
+    <else/>
+    	<a href="<{:u('user/apply/index')}>" title="商家入驻">商家入驻</a>   &nbsp; &nbsp; 
+    </if>
+    <a href="<{:u('user/index/index')}>" title="个人中心">个人中心</a>   &nbsp; &nbsp;                        
+</div>
+<div class="blank-20"></div>
+
+<style>
+
+.foot-fixed .foot-item:nth-child(3){
+	position: absolute;
+    padding: 0;
+    width: 20%;
+    height: 70px;
+	margin-left: 40%;
+    left: 0;
+    top: -20px;
+    background: url(/static/default/wap/image/icons.png) center -75px no-repeat;
+    background-size: 56px auto;
+}
+
+</style>
+<if condition="$CONFIG[other][footer] eq 1">
+    <footer class="foot-fixed">
+    <a class="foot-item <if condition="($ctl eq 'index') AND ($act neq 'more')">active</if>" href="<{:U('index/index')}>">		
+    <span class="iconfont icon-shouye"></span>
+    <span class="foot-label">首页</span>
+    </a>
+<!--  
+    <a class="foot-item <if condition="($ctl eq 'life') AND ($act neq 'release')">active</if>" href="<{:U('life/index')}>">			
+    <span class="iconfont icon-shangjia2"></span><span class="foot-label">商家</span></a>-->
+    
+    <a class="foot-item <if condition="($ctl eq 'life') AND ($act neq 'release')">active</if>" href="<{:U('life/fujin')}>">         
+    <span class="iconfont icon-shangjia2"></span><span class="foot-label">附近</span></a>
+
+ 	<a class="foot-item <eq name="ctl" value="thread">active</eq>" href="<{:U('user/member/fabu')}>">		
+    	<span class="iconfont"></span><span class="foot-label"></span>
+    </a>
+    
+	<a class="foot-item">		
+    	<span class=""></span><span class="foot-label"></span>
+    </a>
+
+     <!-- 
+    <a class="foot-item <eq name="act" value="release">active</eq>" href="<{:U('life/release')}>">			
+    <span class="iconfont icon-fabu"></span><span class="foot-label">发单</span></a>-->
+      
+    <a class="foot-item <eq name="act" value="release">active</eq>" href="<{:U('delivery/lists/scraped')}>">          
+    <span class="iconfont icon-fabu"></span><span class="foot-label">订单</span></a>  
+        
+    <a class="foot-item <eq name="ctl" value="user">active</eq>" href="<{:U('user/member/index')}>">			
+    <span class="iconfont icon-wo"></span><span class="foot-label">我的</span></a>
+    
+    </footer>
+</if>
+
+<iframe id="x-frame" name="x-frame" style="display:none;"></iframe>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<div class="blank-20"></div>
+ <footer class="foot-fixed">
+   <a class="foot-item  <if condition="($act eq 'index')">active</if> " href="<{:u('distribution/index')}>">		
+    <span class="iconfont icon-shouye"></span>
+    <span class="foot-label">首页</span>
+    </a>
+    
+    <a class="foot-item  <if condition="($act eq 'profit')">active</if> " href="<{:LinkTo('distribution/profit',array('status'=>1))}>">			
+    <span class="iconfont icon-maidan"></span><span class="foot-label">收益</span></a>
+    
+     <a class="foot-item  <if condition="($act eq 'subordinate')">active</if>" href="<{:u('distribution/subordinate',array('level'=>1))}>">			
+    <span class="iconfont icon-fangxiangxia"></span><span class="foot-label">下级</span></a>
+    
+    
+    
+    <a class="foot-item  <if condition="($act eq 'superior')">active</if>" href="<{:u('distribution/superior')}>">			
+    <span class="iconfont icon-fangxiangxia"></span><span class="foot-label">上级</span></a>
+    
+    <a class="foot-item  <if condition="($act eq 'poster')">active</if>" href="<{:U('wap/api/poster', array('fuid'=>$MEMBER['user_id']))}>">			
+    <span class="iconfont  icon-erweima2"></span><span class="foot-label">海报</span></a>
+    
+   
+    </footer>
+
+
+<iframe id="x-frame" name="x-frame" style="display:none;">
+</iframe>
+</body>
+</html>

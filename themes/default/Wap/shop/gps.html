@@ -1,0 +1,65 @@
+<include  file='public:header'/>
+<style type="text/css">
+.top-fixed .top-title {padding:0;}
+body, html,#allmap {width: 100%;height: 100%;overflow: hidden;margin:0;}
+#golist {display: none;}
+.lbs-tag .info-box .info-btn i.icon {margin-right: 4px;position:relative;}
+.lbs-tag .zoom-btn-container i.icon{position:relative;}
+@media (max-device-width: 800px){#golist{display: block!important;}}
+.allmap_bottom{ position:fixed; z-index:1000; left:0; bottom:0; right:0; background:#fff; border-top:0.1rem solid #ddd; box-shadow: 0 0 0.08rem #ccc; padding:0.8em 0.8rem;}
+.allmap_bottom h3{font-size:16px;line-height:1.2rem; overflow: hidden;text-overflow: ellipsis;white-space: nowrap; margin-bottom:0.2rem; font-weight:bold;}
+.allmap_bottom p{font-size:12px;color: gray;height:2.4rem;overflow: hidden;text-overflow: ellipsis;white-space: nowrap;line-height:2.4rem;}
+.allmap_bottom .btn{ display:block;height:2.2rem;border-radius: 0.3rem;border: 0.1rem solid #c1c1c1;background:#fff; box-shadow: 0 0.1rem 0.1rem #fefefe;margin-top: 0.6rem; text-align:center; line-height:2.2rem;}
+.allmap_bottom .btn .ico{ display:inline-block; width:1.2rem; height:1.2rem; background:url(/static/default/wap/image/shop/addr_ico.png) no-repeat center; margin-right:0.5rem; vertical-align:middle;}
+</style>
+
+<body>
+    <header class="top-fixed bg-yellow bg-inverse">
+        <div class="top-back">
+            <a href="<{:U('shop/detail',array('shop_id'=>$shop['shop_id']))}>"><i class="icon-angle-left"></i></a>
+        </div>
+        <div class="top-title">
+            商家地图
+        </div>
+    </header>
+<script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=7b92b3afff29988b6d4dbf9a00698ed8"></script>
+<div id="allmap" style="width:100%; height:100%;">
+	
+</div>
+<div class="allmap_bottom">
+    <h3>1.<{$shop.addr}></h3>
+    <P>地址:<{$shop.addr}></P>
+  <a href="javascript:;" id="dao" class="button button-big button-block bg-yellow text-center">导航到这里去</a> </div>
+<?php if(!$is_app){?>
+<style>
+    #allmap{margin-top: 0.5rem;}
+</style>
+<?php }?>
+
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");
+    map.centerAndZoom(new BMap.Point("<{$shop.lng}>", "<{$shop.lat}>"), 16);
+    var point = new BMap.Point("<{$shop.lng}>", "<{$shop.lat}>");
+    var url = "__TMPL__statics/img/markers.png";
+    var myIcon = new BMap.Icon(url, new BMap.Size(20,32));
+    map.centerAndZoom(point, 16);
+    var marker = new BMap.Marker(point,{icon:myIcon}); // 创建标注
+    map.clearOverlays();
+    map.addOverlay(marker); // 将标注添加到地图中
+    marker.setAnimation(BMAP_ANIMATION_BOUNCE); //跳动的动画
+    var navigationControl = new BMap.NavigationControl({anchor: BMAP_ANCHOR_TOP_LEFT,type: BMAP_NAVIGATION_CONTROL_LARGE,enableGeolocation: true});
+    map.addControl(navigationControl); //添加默认缩放平移控件
+</script>
+<script>
+    $(document).ready(function(){
+        var url = "http://map.baidu.com/mobile/webapp/place/linesearch/foo=bar/from=place&end=word=oooo";
+        var kw = "<{$shop.addr}>";
+        $("#dao").click(function(){
+            window.location.href = url.replace('oooo',kw);
+        })
+        
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,352 @@
+<if condition="!empty($CONFIG[other][wap_index_addr])">
+ <include file="index:lbs_addr" />
+<else/>
+ <include file="public:header" />
+</if>
+<script src="/static/default/wap/other/roll.js"></script>
+<script src="__TMPL__statics/js/jquery.flexslider-min.js" type="text/javascript" charset="utf-8"></script>
+<script src="__TMPL__statics/js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+
+<script src="/themes/default/Wap/statics/js/jquery.flexslider-min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/themes/default/Wap/statics/js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/static/default/wap/other/roll.js"></script>
+
+
+<style>
+/*.top-fixed .top-local i.iconfont{ font-size:16px}*/
+/*.top-fixed .top-search{margin: 0 0 0 27%;}*/
+/*.top-fixed .top-search { width:48%}*/
+/*.top-fixed .top-search input {border-radius: 20px;}*/
+.index-tuan .container1 .des h5 span{float:right;margin-left:5px;width:20px;height:20px;text-align:center;line-height:20px;color:#fff;font-size:12px!important;cursor:pointer}
+.index-tuan .container1 .des h5 span.fu{background:#eb6100}
+.index-tuan .container1 .des h5 span.pei{background:#55830A}
+.index-tuan .container1 .des h5 span.fan{background:#ff2121}
+.index-tuan .container1 .des h5 span.jian{background:#00a0e9}
+.index-tuan .container1 .des p.des-addr{margin: 0;color: #999;font-size: 12px;line-height: inherit;}
+.man_money{padding:1px 5px;height:20px;text-align:center;line-height:20px;color:#fff;font-size:12px !important;cursor:pointer;}
+.full_money{background:#00a0e9;}
+.logistics_full{background:#eb6100}
+.order_price_full{background: #ff2121;}
+.location, .search, .icon{ float: left; font-size: 0.85rem;margin-left: 3%;filter:alpha(Opacity=80);-moz-opacity:0.5;opacity: 0.5;}
+.location{width: 10%;}
+.search{width: 50%;border:none;outline: none;}
+.icon{width: 10%;margin-left: 45px}
+.lang{border-radius: 20px;border:1px solid #DBDBDB;height: 30px}
+.old{position: fixed;z-index: 9999;width: 100%;float: left;margin-top: -40px;text-align: center;clear:both}
+/*#sousuo{position: fixed;z-index: 9999;margin-top: -30px;margin-left: 193px}*/
+/*body{text-align: center}*/
+</style>
+
+
+		<div class="old">
+			<div class="location">
+				<a href="<{:U('city/index')}>"><img src="/static/default/wap/image/index/dingwei.png" width="30px" height="30px"></a>
+			</div>
+
+			<div class="search">
+				<form method="post" action="<{:U('all/index')}>">
+					<input type="text" class="lang" name="keyword" placeholder="<{$keyword|default='请输入搜索关键字'}>"  />
+					<!-- <button type="submit" id="sousuo" class="iconfont icon-search"></button> -->
+				</form>
+			</div>
+
+			<div class="icon"><a href="<{:U('user/member/index')}>"><img src="/static/default/wap/image/index/yonghu.png" width="30px" height="30px"></a></div>
+		</div>
+
+
+		<div id="focus" class="focus">
+
+			<div class="hd"><ul></ul></div>
+
+			<!--下面的limit="0,2"是幻灯的个数，2代表2张图，以此类推，site_id=57是你广告位的ID-->
+			<div class="bd">
+
+				<ul>
+					<calldata mdl="Ad" where=" closed=0 AND site_id=57 AND city_id IN ({$city_ids}) and bg_date ELT '{$today}' AND end_date EGT '{$today}' " limit="0,6" cache="0" order="orderby asc">
+						<li>
+							<a href="<{:U('app/ad/click',array('ad_id'=>$item['ad_id'],'aready'=>2))}>"><img src="<{:config_img($item['photo'])}>" /></a>
+						</li>
+					</calldata>
+				</ul>
+			</div>
+		</div>
+		<script type="text/javascript">
+			$(function(){
+				$("#search-btn").click(function(){
+					if($(".top-search").css("display")=='block'){
+						$(".top-search").hide();
+						$(".top-title").show(200);
+					}
+					else{
+						$(".top-search").show();
+						$(".top-title").hide(200);
+					}
+				});
+			});
+
+			TouchSlide({
+				slideCell: "#focus",
+				titCell: ".hd ul", //开启自动分页 autoPage:true ，此时设置 titCell 为导航元素包裹层
+				mainCell: ".bd ul",
+				effect: "left",
+				autoPlay: true, //自动播放
+				autoPage: true, //自动分页
+				switchLoad: "_src", //切换加载，真实图片路径为"_src",
+			});
+		</script>
+
+		
+        <div id="index" class="page-center-box">
+       
+
+        <if condition="$CONFIG[other][wap_navigation] eq 1">
+        <script>
+          $(document).ready(function () {
+             $('.navigation_index_cate').flexslider({
+                directionNav: true,
+                pauseOnAction: false,
+             });
+          });
+        </script>
+
+        <div class="banner_navigation">
+                <div class="navigation_index_cate">
+                    <ul class="slides">
+                        <volist name='nav' id='item'>
+                            <if condition="$i%10 eq 1">
+                                <li class="list">
+                                    <ul class="cate">
+                                        <li>
+                                            <a href="<{:config_navigation_url($item['url'],2)}>?nav_id=<{$item['nav_id']}>"><img src="<{:config_img($item['photo'])}>">
+                                                <p><{$item.nav_name}></p></a>
+                                        </li>
+                                        <elseif condition="$i%10 eq 0"/>
+
+                                        <li>
+                                            <a href="<{:config_navigation_url($item['url'],2)}>?nav_id=<{$item['nav_id']}>"><img src="<{:config_img($item['photo'])}>">
+                                                <p><{$item.nav_name}></p></a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <else/>
+                                <li>
+                                    <a href="<{:config_navigation_url($item['url'],2)}>?nav_id=<{$item['nav_id']}>"><img src="<{:config_img($item['photo'])}>">
+                                        <p><{$item.nav_name}></p></a>
+                                </li>
+                            </if>
+                        </volist>
+                    </ul>
+                </div>
+            </div>
+        <else/>
+			<script>
+				$(document).ready(function() {
+					$('.flexslider_cate').flexslider({
+						directionNav: true,
+						pauseOnAction: false,
+					});
+				});
+			</script>
+
+			<div class="banner mb10">
+				<div class="flexslider_cate">
+					<ul class="slides">
+						<volist name='nav' id='item'>
+							<if condition="$i%10 eq 1">
+								<li class="list">
+									<ul class="cate">
+										<li>
+											<a href="<{:config_navigation_url($item['url'],2)}>?nav_id=<{$item['nav_id']}>">
+												<div class="iconfont <{$item.ioc}> <{$item.colour}>"></div>
+												<p>
+													<{$item.nav_name}>
+												</p>
+											</a>
+										</li>
+										<elseif condition="$i%10 eq 0" />
+										<li>
+											<a href="<{:config_navigation_url($item['url'],2)}>?nav_id=<{$item['nav_id']}>">
+												<div class="iconfont <{$item.ioc}> <{$item.colour}>"></div>
+												<p>
+													<{$item.nav_name}>
+												</p>
+											</a>
+										</li>
+									</ul>
+								</li>
+								<else/>
+								<li>
+									<a href="<{:config_navigation_url($item['url'],2)}>?nav_id=<{$item['nav_id']}>">
+										<div class="iconfont <{$item.ioc}> <{$item.colour}>"></div>
+										<p>
+											<{$item.nav_name}>
+										</p>
+									</a>
+								</li>
+							</if>
+						</volist>
+					</ul>
+				</div>
+                </if>
+			</div>
+            
+  			<div class="blank-10 bg"></div>
+      
+			<div class="index-ads">
+				<div class="line border-bottom border-top">
+					<div class="x5 ad-1">
+						<calldata mdl="Ad" where=" closed=0 AND site_id=62 AND  city_id IN ({$city_ids}) and bg_date ELT '{$today}' AND end_date EGT '{$today}' " limit="0,1" cache="600" order="orderby asc">
+							<a href="<{:U('app/ad/click',array('ad_id'=>$item['ad_id'],'aready'=>2))}>"><img src="<{:config_img($item['photo'])}>"></a>
+						</calldata>
+					</div>
+					<div class="x7 border-left">
+						<div class="line">
+							<div class="x12 border-bottom ad-2">
+								<calldata mdl="Ad" where=" closed=0 AND site_id=63 AND  city_id IN ({$city_ids}) and bg_date ELT '{$today}' AND end_date EGT '{$today}' " limit="0,1" cache="600" order="orderby asc">
+									<a href="<{:U('app/ad/click',array('ad_id'=>$item['ad_id'],'aready'=>2))}>"><img src="<{:config_img($item['photo'])}>"></a>
+								</calldata>
+							</div>
+							<!--<div class="x6 border-right ad-3">-->
+								<!--<calldata mdl="Ad" where=" closed=0 AND site_id=64 AND  city_id IN ({$city_ids}) and bg_date ELT '{$today}' AND end_date EGT '{$today}' " limit="0,1" cache="600" order="orderby asc">-->
+									<!--<a href="<{:U('app/ad/click',array('ad_id'=>$item['ad_id'],'aready'=>2))}>"><img src="<{:config_img($item['photo'])}>"></a>-->
+								<!--</calldata>-->
+							<!--</div>-->
+							<!--<div class="x6 ad-3">-->
+								<!--<calldata mdl="Ad" where=" closed=0 AND site_id=65 AND  city_id IN ({$city_ids}) and bg_date ELT '{$today}' AND end_date EGT '{$today}' " limit="0,1" cache="600" order="orderby asc">-->
+									<!--<a href="<{:U('app/ad/click',array('ad_id'=>$item['ad_id'],'aready'=>2))}>"><img src="<{:config_img($item['photo'])}>"></a>-->
+								<!--</calldata>-->
+							<!--</div>-->
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="blank-10 bg" style="border-bottom: thin solid #eee;">
+			</div>
+			<div class="tab index-tab" data-toggle="click">
+				<div class="tab-head">
+					<ul class="tab-nav line">
+                        <li class="x4 active"><a href="#tab-active">附近优选</a></li>
+						<li class="x4"><a href="#tab-coupon">附近商家</a></li>
+						<li class="x4"><a href="#tab-shop">附近服务</a></li>
+						<ul class="tab-nav line">
+					</ul>
+				</div>
+				<div class="tab-body">
+
+
+					<!--附近商家模块开始-->
+					<div class="tab-panel" id="tab-coupon">
+						<ul class="index-tuan">
+							<volist name="shoplist" id="item" key="index">
+								<div class="container1" onclick="location='<{:U('shop/detail',array('shop_id'=>$item['shop_id']))}>'">
+									<img class="x2" src="<{:config_img($item['photo'])}>">
+									<div class="des x10">
+										<php>
+											$business = D('Business')->where('business_id ='.$item['business_id']) -> find();
+											$business_name = $business['business_name'];
+										</php>
+										<h5><{:bao_msubstr($item['shop_name'],0,10,false)}> <a style="color:#999; margin-left:10px;"><{$business_name}>商圈 &nbsp;<{$item.d}></a></h5>
+										<if condition="!empty($item['score'])">
+											<p class="intro"><span class="ui-starbar" style="margin-top:0.2rem;"><span style="width:<{:round($item['score']*2,2)}>%"></span></span></p>
+											<else/>
+											<p class="intro"> 暂无评价 </p>
+										</if>
+										<p class="intro">地址：<{:bao_msubstr($item['addr'],0,12,false)}></p>
+									</div>
+								</div>
+							</volist>
+						</ul>
+						<div class="more"><a href="<{:U('shop/index')}>">查看更多商家</a></div>
+					</div>
+					<!--附近商家模块结束-->
+
+					<!--商家服务模块开始-->
+					<div class="tab-panel" id="tab-shop">
+						<ul class="line index-tuan">
+							<volist name="life" id="item" key="index">
+								<div class="container1" onclick="location='<{:U('life/detail',array('life_id'=>$item['life_id']))}>'">
+									<img class="x2" src="<{:config_img($item['photo'])}>">
+									<div class="des x10">
+										<h5><{:bao_msubstr($item['title'],0,10,false)}></h5>
+										<p class="intro">地址：<{:bao_msubstr($item[ 'addr'],0,12,false)}></p>
+									</div>
+								</div>
+							</volist>
+						</ul>
+						<div class="more">
+							<a href="<{:U('life/index')}>">查看更多服务</a>
+						</div>
+					</div>
+					<!--商家服务模块结束-->
+
+					<div class="tab-panel active" id="tab-active">
+						<!--点餐模块开始-->
+						<ul class="index-tuan">
+							<volist name="ele" id="item" key="index">
+								<php>
+									$Shop = D('Shop') -> where('shop_id='.$item['shop_id'])->find();
+									$intro = bao_msubstr($item['intro'],0,30,false);
+								</php>
+								<div class="container1" onclick="location='<{:U('ele/shop',array('shop_id'=>$item['shop_id']))}>'">
+									<img class="x2" src="<{:config_img($Shop['photo'])}>">
+									<div class="des x10">
+										<h5><{:bao_msubstr($item['shop_name'],0,14,false)}>
+											<eq name="item.is_pay" value="1"> <span class="fu">付</span></eq>
+											<eq name="item.is_full" value="1"> <span class="fan">惠</span></eq>
+											<eq name="item.is_new" value="1"><span class="jian">减</span></eq>
+										</h5>
+										<p class="des-addr">
+											<i class="mui-icon mui-icon-location"></i>
+											&yen;<{:round($item['since_money']/100,2)}>起送/配送费 &yen;<{:round($item['logistics']/100,2)}>/已售<{$item['sold_num']}>
+										</p>
+										<eq name="var.is_new" value="1">
+											<p class="des-addr">
+												<span class="man_money full_money">新单立减</span>
+												单笔满&yen;<{:round($item['full_money']/100,2)}>元减 &yen;<{:round($item['new_money']/100,2)}>元
+											</p>
+										</eq>
+										<if condition="!empty($item['logistics_full'])">
+											<p class="des-addr">
+												<span class="man_money logistics_full">免配送</span>
+												单笔满&yen;<{:round($item['logistics_full']/100,2)}>元免配送费
+											</p>
+										</if>
+										<eq name="item.is_full" value="1">
+											<p class="des-addr">
+												<span class="man_money order_price_full">满减</span>
+												<if condition="!empty($item['order_price_full_1'])">
+													单笔满&yen;<{:round($item['order_price_full_1']/100,2)}>元减 &yen;<{:round($item['order_price_reduce_1']/100,2)}>元
+												</if>
+												<if condition="!empty($item['order_price_full_2'])">
+													，单笔满&yen;<{:round($item['order_price_full_2']/100,2)}>元减 &yen;<{:round($item['order_price_reduce_2']/100,2)}>元
+												</if>
+											</p>
+										</eq>
+										<if condition="!empty($item['radius'])">
+											<p class="des-addr"><i class="icon-motorcycle"></i> 配送半径：<{$item.radius}> KM</p>
+										</if>
+
+									</div>
+								</div>
+							</volist>
+						</ul>
+						<div class="more"><a href="<{:U('ele/index')}>">查看更多点餐</a></div>
+					</div>
+					<!--点餐模块结束-->
+
+
+				</div>
+			</div>
+			<div class="blank-10"></div>
+
+			
+<!--
+			<div class="blank-10 bg"></div>
+			<div class="index-title">
+				<h4>猜您喜欢</h4>
+				<em><a href="<{:U('shop/index')}>">更多商家 <i class="iconfont icon-angle-right"></i></a></em>
+			</div>-->
+
+
+
+<include file="public:footer" />

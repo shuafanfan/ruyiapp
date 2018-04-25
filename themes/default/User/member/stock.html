@@ -1,0 +1,56 @@
+<include file="public:header"/>
+<header class="top-fixed bg-yellow bg-inverse">
+	<div class="top-back">
+		<a class="top-addr" href="<{:U('user/stock/index')}>"><i class="iconfont icon-angle-left"></i></a>
+	</div>
+		<div class="top-title">
+			股权完成支付
+		</div>
+	<div class="top-signed">
+		<include file="public:message"/>
+	</div>
+</header>
+
+
+<div class="panel-list">
+	<ul>
+		<li><a href="javascript:;">订单编号：<em class="text-gray"><{$order.order_id}></em></a></li>
+        <li><a href="javascript:;">股权名称：<em class="text-gray"><{$stock['title']}></em></a></li>
+        <li><a href="javascript:;">股权编号：<em class="text-gray"><{$order.stock_number}></em></a></li>
+        <li><a href="javascript:;">股权人姓名：<em class="text-gray"><{$order.name}></em></a></li>
+        <li><a href="javascript:;">股权人电话：<em class="text-gray"><{$order.mobile}></em></a></li>
+	</ul>
+</div>
+<div class="blank-10 bg"></div>
+
+<div class="line padding border-bottom">
+	<div class="x3">
+		<img src="<{:config_img($stock['photo'])}>" width="90%" />
+	</div>
+	<div class="x9">
+		<p class="margin-small">名称：<{$stock['title']}></p>
+        <p class="margin-small">编号：<{$order.stock_number}></p>
+		<p class="margin-small">
+			数量：<{$order.num}><span class="margin-left">x</span><span class="margin-left">&yen;<{:round($order['price']/100,2)}>元</span><span class="margin-left text-dot">=￥<{:round($order['need_pay_price']/100,2)}></span>
+		</p>
+	</div>
+</div>
+
+<div class="blank-10 bg"></div>
+
+
+<div class="panel-list">
+	<ul>
+		<li><a href="javascript:;">下单时间：<{$order.create_time|date='Y-m-d H:i:s',###}></em></a></li>
+        <li><a href="javascript:;">付款方式：<em class="text-gray"><{$paytype[$detail['code']]['name']}></em></a></li>
+        <li><a href="javascript:;">订单总额：<em class="text-gray">&yen;<{:round($order['need_pay_price']/100,2)}>元</em></a></li>
+	</ul>
+</div>
+
+<div class="blank-20"></div>
+<div class="line text-center">
+	<a class="button bg-dot" href="<{:U('user/stock/detail',array('order_id'=>$detail['order_id']))}>">查看详情</a>
+	<a class="button bg-main" href="<{:U('wap/stock/index')}>">继续逛逛</a>
+</div>
+<div class="blank-20"></div>
+<include  file='public:footer'/>    

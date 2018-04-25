@@ -1,0 +1,83 @@
+<include file="public:header"/>    
+    
+		<header id="header" class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">商家服务预约抢单中心</h1>
+        	<a class="mui-icon mui-icon-upload mui-pull-right" href="<{:U('passport/logout')}>"></a>
+        </header>
+<style>
+.mui-table-view{ margin-top:60px;}
+.mui-content{ padding-top:0px!important;}
+.mui-ios .mui-table-view-cell {display: block;}
+.shop-money{float:left;text-align:center;}
+.mui-ios .mui-table-view-cell .shop-money a .mui-media-body{text-align:center;width: 80%;}
+</style>  
+
+		<ul class="mui-table-view">
+				<li class="mui-table-view-cell mui-media">
+					<a href="javascript:;" class="">
+						<img class="mui-media-object mui-pull-left" src="<{:config_img($SHOP['logo'])}>">
+						<div class="mui-media-body">
+							<{$SHOP['shop_name']}>
+							<p class="mui-ellipsis">
+                            <{$SHOP['mobile']}>
+                            <if condition="!empty($sms['num'])">
+                            	剩余短信<{$sms['num']}>条。
+                            </if>
+                            </p>
+						</div>
+					</a>
+				</li>
+                <div class="mui-table-view-cell mui-media">
+                    <li class="shop-money mui-col-xs-4">
+                        <a href="<{:U('money/index')}>" class="">
+                            <div class="mui-media-body">
+                                <{:round($counts['gold_day']/100,2)}>
+                                <p class="mui-ellipsis">今日收入</p>
+                            </div>
+                        </a>
+                    </li>
+                     <li class="shop-money mui-col-xs-4">
+                        <a href="<{:U('money/index')}>" class="">
+                            <div class="mui-media-body">
+                                <{:round($counts['gold_day_yesterday']/100,2)}>
+                                <p class="mui-ellipsis">昨日收入</p>
+                            </div>
+                        </a>
+                    </li>
+                     <li class="shop-money mui-col-xs-4">
+                        <a href="<{:U('money/index')}>" class="">
+                            <div class="mui-media-body">
+                                <{:round($MEMBER['gold']/100,2)}>
+                                <p class="mui-ellipsis">商户资金</p>
+                            </div>
+                        </a>
+                    </li>
+                    
+                    
+				</div>
+			</ul>
+            
+    
+        
+		<div class="mui-content">
+		        <ul class="mui-table-view mui-grid-view mui-grid-9">
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="<{:U('order/index',array('status'=>1))}>">
+		                    <span class="mui-icon mui-icon-minus-filled"><span class="mui-badge"><{$counts['order']}></span></span>
+		                    <div class="mui-media-body">待抢单</div></a></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="<{:U('order/index',array('status'=>2))}>">
+		                    <span class="mui-icon mui-icon-paperplane"><span class="mui-badge mui-badge-inverted"><{$counts['order_orders']}></span></span>
+		                    <div class="mui-media-body">已抢单</div></a></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="<{:U('order/index',array('status'=>8))}>">
+		                    <span class="mui-icon mui-icon-starhalf"><span class="mui-badge mui-badge-inverted"><{$counts['order_complete']}></span></span>
+		                    <div class="mui-media-body">已完成</div></a></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="<{:U('money/index')}>">
+		                    <span class="mui-icon mui-icon-redo"></span>
+		                    <div class="mui-media-body">财务管理</div></a></li>
+		            <li class="mui-table-view-cell mui-media mui-col-xs-4 mui-col-sm-3"><a href="<{:U('set/index')}>">
+		                    <span class="mui-icon mui-icon-gear-filled"></span>
+		                    <div class="mui-media-body">设置</div></a></li>
+		           
+		        </ul> 
+		</div>
+      
+<include file="public:footer"/>

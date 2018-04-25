@@ -1,0 +1,75 @@
+
+<style>
+
+
+.shop-list .item{overflow:hidden;padding:10px 0;border-bottom:thin solid #EEE;display:block;position:relative;}
+.shop-list .item .pic{float:left;width:100px;height:80px;width:80px;}
+.shop-list .item .des{float:left;width:100%;padding-left:100px;position:absolute;left:0;}
+.shop-list .item .des h5{overflow:hidden;margin-bottom:5px;width:100%;}
+.shop-list .item .des .info span.ui-starbar{ margin-top:5px;}
+.shop-list .item .des .info span.shopyouhui{color:#F00;font-size:16px; font-weight:bold; padding: 0 3px;float: right;}
+.shop-list .item .des .distance{float:right;}
+.shop-list .item .des .addr{padding:5px 0;font-size:12px;color:#999;}
+.shop-list .item .des .info{}
+</style>
+
+<volist name="shop" id="item" key="index">
+
+	<a class="item" href="<{:U('shop/detail',array('shop_id'=>$item['shop_id']))}>">	
+
+    
+
+		<img class="pic" src="<{:config_img($item['photo'])}>" />	
+
+		<div class="des">	
+
+			<h5><{:msubstr($item['shop_name'],0,6,'utf-8',false)}> &nbsp;<if condition="$item['is_renzheng'] eq 1"><span class="renzheng">认证</span></if>
+
+				<span class="distance"><{$item.d}></span>	
+
+			</h5>	
+
+			<div class="info">	
+
+                <if condition="!empty($item['score'])"> <!--如果价格等于0-->
+
+					<span class="ui-starbar"><span style="width:<{:round($item['score']*2,2)}>%"></span></span>
+
+                <else/>
+
+                	暂无评价
+
+                </if>
+
+                
+
+                <php>$shopyouhui = D('Shopyouhui')->where(array('shop_id'=>$item['shop_id']))->find();</php>
+
+                <if condition="!empty($shopyouhui)">
+
+                	<if condition="$shopyouhui['type_id'] EQ 0">
+
+                   		<span class="shopyouhui"><{$shopyouhui['discount']}>折</span>
+
+                    <else/>
+
+                    	<span class="shopyouhui">满 &yen;<{$shopyouhui['min_amount']}>元&nbsp;减 &yen;<{$shopyouhui['amount']}>元 </span>
+
+                    </if>
+
+                </if>
+
+			</div>	
+
+			<span class="addr">	
+
+				<{:msubstr($item['addr'],0,26,'utf-8',false)}>
+
+			</span>
+
+		</div>	
+
+	</a>
+
+</volist>
+
